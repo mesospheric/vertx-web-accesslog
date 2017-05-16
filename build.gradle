@@ -1,16 +1,64 @@
-
-repositories {
-    mavenCentral()
-    jcenter()
-}
-
 apply plugin: 'eclipse'
 apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+def versionPrefix="3.4.1"
+version = "${versionPrefix}-${System.getenv('BUILD_NUMBER') ?: 'SNAPSHOT'}"
+sourceCompatibility = '1.8'
+group = 'com.mdac.vertx'
+archivesBaseName='web'
+
+repositories {
+	mavenCentral()
+	jcenter()
+}
+
+uploadArchives {
+	repositories {
+		mavenDeployer
+				{
+					repository(url: "${nexusUrl}/repository/maven-releases/") {
+						authentication(userName: nexusUsername, password: nexusPassword)
+					}
+
+					snapshotRepository(url: "${nexusUrl}/repository/maven-snapshots") {
+						authentication(userName: nexusUsername, password: nexusPassword)
+					}
+				}
+	}
+}
+
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		jcenter()
+		maven { url 'https://splunk.artifactoryonline.com/splunk/ext-releases-local/' }
+		maven { url "${nexusUrl}/repository/jcenter/"    }
+		maven { url "${nexusUrl}/repository/maven-snapshots/"    }
+		maven { url "${nexusUrl}/repository/maven-releases/"    }
+		maven { url "https://plugins.gradle.org/m2/"   }
+	}
+
+	dependencies {
+		classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
+	}
+}
+
+
+
+//plugins {
+//	id "com.github.lkishalmi.gatling" version "0.4.1"
+//	id 'com.github.ben-manes.versions' version '0.14.0'
+//}
+
 
 dependencies {
 
-	compile 'io.vertx:vertx-core:3.3.3'
-	compile 'io.vertx:vertx-web:3.3.3'
+	compile 'io.vertx:vertx-core:3.4.1'
+	compile 'io.vertx:vertx-web:3.4.1'
 	
 	// Logback (via SLF4J)
 	testRuntime 'ch.qos.logback:logback-classic:1.1.7'
@@ -23,8 +71,20 @@ dependencies {
 }
 
 
+
+//uploadShadow {
+//	repositories {
+//		mavenDeployer
+//				{
+//					repository(url: "${nexusUrl}/content/repositories/Profile_Java/maven-releases") {
+//						authentication(userName: nexusUsername, password: nexusPassword)
+//					}
+//				}
+//	}
+//}
+
 sourceCompatibility='1.8'
 targetCompatibility='1.8'
 
-jar.archiveName = "vertx-web-accesslog-3.3.3.jar"
+jar.archiveName = "vertx-web-accesslog-3.4.1.jar"
 

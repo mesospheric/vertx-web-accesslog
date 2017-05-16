@@ -65,6 +65,8 @@ public class AccessLoggerHandlerImpl implements AccessLoggerHandler {
 		final HttpServerResponse response = context.response();
 		
 		final Map<String, Object> values = new HashMap<String, Object>();
+
+		values.put("data", context.data());
 		values.put("uri", request.path());
 		if(request.query() != null){
 			values.put("query", request.query());

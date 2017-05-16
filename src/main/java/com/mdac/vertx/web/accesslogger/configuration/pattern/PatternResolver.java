@@ -18,12 +18,11 @@ public class PatternResolver {
 																new BytesSentElement(),
 																new HostElement(),
 																new HeaderElement(),
-																new CookieElement()
+																new CookieElement(),
+																new DataElement()
 															);
 	
-	
-	
-	
+
 	public ResolvedPatternResult resolvePattern(final String rawPattern){
 		
 		String rawPatternInEvaluation = rawPattern;
