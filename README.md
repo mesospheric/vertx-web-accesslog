@@ -79,7 +79,7 @@ Datetime Apache | %t | - | Logs by default the request timestamp using format 'E
 Incoming Headers | %{IDENTIFIER}i  | - | If not found - will be logged |
 Outgoing Response Headers | %{IDENTIFIER}o  | - | If not found - will be logged |
 Cookie | %{IDENTIFIER}c  | - | If not found - will be logged |
-
+Routing Context Data Map| %{IDENTIFIER}d  | - | If not found - will be logged |
 
 
 
